@@ -12,7 +12,7 @@
 rustup target add wasm32-unknown-unknown
 cargo build --release --target wasm32-unknown-unknown
 
-PKG_DIR="$(typst info | awk -F': ' '/Package path/{print $2}')/local/budoux/0.1.0"
+PKG_DIR="$(typst info --format json | jq -r '.packages["package-path"]')/local/budoux/0.1.0"
 mkdir -p "$PKG_DIR"
 cp typst.toml lib.typ "$PKG_DIR"
 cp target/wasm32-unknown-unknown/release/typst_budoux.wasm "$PKG_DIR/typst-budoux.wasm"
