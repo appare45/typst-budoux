@@ -1,5 +1,5 @@
 [package]
 name = "budoux"
-version = "0.0.0" # リリース時にタグ（vX.Y.Z）からCIが上書きする
+version = "0.0.0"
 entrypoint = "lib.typ"
 license = "Apache-2.0 OR MIT"
