@@ -8,17 +8,32 @@
 
 ### インストール
 
-```sh
-rustup target add wasm32-unknown-unknown
-cargo build --release --target wasm32-unknown-unknown
+[最新のリリース](https://github.com/appare45/typst-budoux/releases/latest)をダウンロードし、ローカルパッケージとして配置します。
 
-PKG_DIR="$(typst info --format json | jq -r '.packages["package-path"]')/local/budoux/0.1.0"
+```sh
+curl -fsSL https://raw.githubusercontent.com/appare45/typst-budoux/main/install.sh | sh
+```
+
+内容を確認しながら実行したい場合は、同じ処理を直接実行できます。
+
+```sh
+PACKAGE_PATH="$(typst info --format json | jq -r '.packages["package-path"]')"
+
+curl -fsSL -o /tmp/typst-budoux.zip https://github.com/appare45/typst-budoux/releases/latest/download/typst-budoux.zip
+rm -rf /tmp/typst-budoux
+unzip -o /tmp/typst-budoux.zip -d /tmp/typst-budoux
+
+VERSION="$(grep '^version' /tmp/typst-budoux/typst.toml | sed -E 's/version = "(.*)"/\1/')"
+PKG_DIR="$PACKAGE_PATH/local/budoux/$VERSION"
 mkdir -p "$PKG_DIR"
-cp typst.toml lib.typ "$PKG_DIR"
-cp target/wasm32-unknown-unknown/release/typst_budoux.wasm "$PKG_DIR/typst-budoux.wasm"
+cp -r /tmp/typst-budoux/. "$PKG_DIR"
+
+rm -rf /tmp/typst-budoux.zip /tmp/typst-budoux
 ```
 
 ### 使い方
+
+インストールされたバージョンは `typst info --format json | jq -r '.packages["package-path"]'` 配下の `local/budoux/` を見ると確認できます。
 
 ```typst
 #import "@local/budoux:0.1.0": segment
