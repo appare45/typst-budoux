@@ -50,6 +50,9 @@ jobs:
         run: |
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             gh release create "${{ github.ref_name }}" --repo "${{ github.repository }}" --generate-notes typst-budoux.zip
+          elif gh release view pre --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release edit pre --repo "${{ github.repository }}" --target "${{ github.sha }}"
+            gh release upload pre --repo "${{ github.repository }}" --clobber typst-budoux.zip
           else
-            gh release create "pre-${{ github.sha }}" --repo "${{ github.repository }}" --prerelease --generate-notes typst-budoux.zip
+            gh release create pre --repo "${{ github.repository }}" --prerelease --generate-notes --target "${{ github.sha }}" typst-budoux.zip
           fi
