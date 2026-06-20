@@ -30,8 +30,12 @@ cp target/wasm32-unknown-unknown/release/typst_budoux.wasm "$PKG_DIR/typst-budou
 `test.typ` に動作確認用の例があります。
 
 ```sh
-typst compile test.typ test.pdf
+typst compile test.typ test.png
 ```
+
+スライドのタイトルを想定した例です。BudouXによって意味的なまとまりの境界で改行されていることがわかります。
+
+![BudouXによる改行位置の比較](test.png)
 
 ## ライセンス
 
