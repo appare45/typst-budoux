@@ -42,6 +42,18 @@ rm -rf /tmp/typst-budoux.zip /tmp/typst-budoux
 #segment("これは日本語の文章をBudouXで分割するテストです。")
 ```
 
+すべてのtext要素に対して適用する場合、再帰的に適用されることを防ぐため[^1] 下記のworkaroundが必要になります。
+
+[^1]: https://forum.typst.app/t/how-to-prevent-recursion-on-show/2778
+
+```typ
+// _bdx: BudouX分割済みであることを示すための目印（実在しないOpenTypeタグ）
+#show text.where(features: (:)): it => {
+  set text(features: ("_bdx": 1))
+  segment(it.text)
+}
+```
+
 `test.typ` に動作確認用の例があります。
 
 ```sh
