@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Add wasm32-unknown-unknown target
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Build
+        run: cargo build --release --target wasm32-unknown-unknown
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp target/wasm32-unknown-unknown/release/typst_budoux.wasm dist/typst-budoux.wasm
+          cp typst.toml lib.typ dist/
+          cd dist && zip -r ../typst-budoux.zip .
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: typst-budoux
+          path: typst-budoux.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: typst-budoux
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            gh release create "${{ github.ref_name }}" --repo "${{ github.repository }}" --generate-notes typst-budoux.zip
+          else
+            gh release create "pre-${{ github.sha }}" --repo "${{ github.repository }}" --prerelease --generate-notes typst-budoux.zip
+          fi
