@@ -54,6 +54,16 @@ rm -rf /tmp/typst-budoux.zip /tmp/typst-budoux
 }
 ```
 
+すべての要素に対して適用する場合は正規表現を使うとよりシンプルに書くことができます。
+
+```typ
+// regexセレクタによる置換は自身の出力に再帰しないため、show textのような無限再帰は起きない
+// https://github.com/typst/typst/pull/3327
+#show regex(".+"): it => segment(it.text)
+// raw内ではBudouXの分割を適用しない（このshowが内側のスコープとして優先される）
+#show raw: it => it
+```
+
 `test.typ` に動作確認用の例があります。
 
 ```sh
