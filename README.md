@@ -33,10 +33,10 @@ rm -rf /tmp/typst-budoux.zip /tmp/typst-budoux
 
 ### 使い方
 
-インストールされたバージョンは `typst info --format json | jq -r '.packages["package-path"]'` 配下の `local/budoux/` を見ると確認できます。
+`install.sh` を実行すると、インストールしたバージョンが標準出力に表示されます。
 
 ```typst
-#import "@local/budoux:0.1.0": segment
+#import "@local/budoux:0.1.1": segment
 
 #set text(lang: "ja")
 #segment("これは日本語の文章をBudouXで分割するテストです。")

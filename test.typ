@@ -1,4 +1,5 @@
-#import "@local/budoux:0.1.0": segment
+// 実際の利用時は `#import "@local/budoux:VERSION": segment` を使う（VERSIONはinstall.shの出力を参照）
+#import "lib.typ": segment
 
 #set page(width: 24cm, height: 13.5cm, margin: 1.5cm)
 #set text(lang: "ja", size: 28pt, weight: "bold")

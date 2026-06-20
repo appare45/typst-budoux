@@ -15,3 +15,4 @@ cp -r /tmp/typst-budoux/. "$PKG_DIR"
 rm -rf /tmp/typst-budoux.zip /tmp/typst-budoux
 
 echo "Installed @local/budoux:$VERSION"
+echo "Use it with: #import \"@local/budoux:$VERSION\": segment"
