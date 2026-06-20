@@ -1,0 +1,5 @@
+[package]
+name = "budoux"
+version = "0.1.0"
+entrypoint = "lib.typ"
+license = "Apache-2.0 OR MIT"
